@@ -37,24 +37,24 @@ Tout d'abord, comme indiqué dans la section "Approche intra et cross volume", u
 >Dans la version finale de notre code, nous avons alors considéré un poids de 1 pour le score intra-volume et un poids de 1.5 pour le score cross-volume, le rendant plus important car il rélève plus souvent des défauts.
 
 Sur les graphiques suivants, qui correpond aux trois premiers fichiers des données propres, nous pouvons bien osberver qu'effectivement le score intra-volume reste quasiment constant d'un volume à l'autre comme l'indique la ligne continu jaune sur ces graphiques.
-![intra1.png](./Image/intra1.png)
-![intra2.png](./Image/intra2.png)
-![intra3.png](./Image/intra3.png)
+![intra1.png](image/intra1.png)
+![intra2.png](image/intra2.png)
+![intra3.png](image/intra3.png)
 
 Ensuite, en ce qui cocnerne la détection des artéfacts, pour notre approche où on combine à la fois le Z-score intra-volume et cross-volume de manière pondéré, voici ci-dessous les résultats que nous pouvons observer pour un des fichiers artéfacté : 
 
-![arttt.png](./Image/arttt.png)
+![arttt.png](image/arttt.png)
 Les pics bleus qui dépassent la ligne rouge horizontale (le seuil combiné) correspondent aux volumes dont le Z-score est supérieur au seuil, indiquant ainsi un artéfact potentile. De cette façon, en plus du graphique, notre modèle nous retourne la liste des volumes corrompus par des artéfacts, qui correspond donc aux pics bleus sur le graphique. Pour le graphique ci-dessus, la liste correspondante est la suivante : [42, 97, 148, 195, 196, 328, 377, 378, 521, 655, 734, 735, 780, 781, 782, 783, 784, 785, 788, 794]. On observe plusieurs pics successifs sur les volumes  734, 735, 781-785, 788, 794. Cela peut refléter une perturbation prolongée comme un mouvement brusque ou un pic de bruit par exemple.
 
 Dans le cas des fichiers médiums, voici ci-dessous les résultats que nous pouvons observer pour un de ce type de fichier : 
-![medd.png](./Image/medd.png) 
+![medd.png](image/medd.png) 
 On observe alors la présence de différents pics qui correspondent à la liste de volumes suivants qui est renvoyée par notre modèle : [164, 233, 241, 242, 338, 434, 610, 611, 612].                     Etant donné que les artéfacts présents dans ce type de fichier sont plus subtiles, nous aimerions bien vérifier si notre modèle nous renvoie une liste correcte et cohérente en visualisant par exemple les artéfacts directement sur les volumes pour confirmer leur présence. Le problème est que les artéfacts sont souvent peu visible à l'oeil nu. Pour contrer ce problème, il est alors préférable de prendre l’image de la différence absolue entre une image moyenne des volumes propres et le volume supposé artéfacté. En effet, l'image ci-dessous illustre ce processus pour le volume supposé artéfacté 164 de notre liste. La colonne de gauche illustre une image moyenne des volumes propres (sur les `n=3` volumes suivants et précédents), la colonne centrale illustre le volume 164 (avec une valeur minimale au $10^e$ percentile pour éliminer une partie du bruit et une valeur maximale au $97.5^e$ percentile pour mieux faire resortir l'artifact) et la colonne de droite la différence absolue entre les deux qui met en lumière les différences importantes entre les deux volumes :
-![164.png](./Image/164.png) 
+![164.png](image/164.png) 
 On observe un certain nombre de différences mise en lumière par les points plus clairs sur les images de la colonne de droite et nous permet de confirmer que le volume 164 est artéfacté de manière significative.  
 
 Une autre manière de visualiser ces défauts est de prendre le ratio entre les bonnes coupes moyennes et le volume artifacté comme sur la figure ci dessous, où la valeur d'un élément a été multiplié par $3.10^9$.
 
-![164.png](./Image/164_ratio.png) 
+![164.png](image/164_ratio.png) 
 
 
 ## Recherches littératures 
