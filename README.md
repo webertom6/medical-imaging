@@ -1,4 +1,4 @@
-# MI2025_T03
+# MEDICAL IMAGING 
  
 ## Introduction 
 
